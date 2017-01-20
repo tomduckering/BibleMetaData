@@ -19,6 +19,9 @@
 		8E1AB1881E32B1900091048F /* BiblePassage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1AB1801E32B1900091048F /* BiblePassage.swift */; };
 		8E1AB18C1E32B28C0091048F /* BibleMetaDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1AB18B1E32B28C0091048F /* BibleMetaDataTests.swift */; };
 		8E1AB18E1E32B2B70091048F /* StringRegexCaptures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1AB18D1E32B2B70091048F /* StringRegexCaptures.swift */; };
+		8EFF66B41E32C34800597AD6 /* PassageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFF66B31E32C34800597AD6 /* PassageFormatter.swift */; };
+		8EFF66B61E32C3F200597AD6 /* BiblePassageFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFF66B51E32C3F200597AD6 /* BiblePassageFormatterTests.swift */; };
+		8EFF66B81E32C44700597AD6 /* BibleReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFF66B71E32C44700597AD6 /* BibleReferenceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		8E1AB1801E32B1900091048F /* BiblePassage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiblePassage.swift; sourceTree = "<group>"; };
 		8E1AB18B1E32B28C0091048F /* BibleMetaDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleMetaDataTests.swift; sourceTree = "<group>"; };
 		8E1AB18D1E32B2B70091048F /* StringRegexCaptures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRegexCaptures.swift; sourceTree = "<group>"; };
+		8EFF66B31E32C34800597AD6 /* PassageFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassageFormatter.swift; sourceTree = "<group>"; };
+		8EFF66B51E32C3F200597AD6 /* BiblePassageFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiblePassageFormatterTests.swift; sourceTree = "<group>"; };
+		8EFF66B71E32C44700597AD6 /* BibleReferenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleReferenceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,7 @@
 				8E1AB1801E32B1900091048F /* BiblePassage.swift */,
 				8E1AB1621E32B1750091048F /* BibleMetaData.h */,
 				8E1AB1631E32B1750091048F /* Info.plist */,
+				8EFF66B31E32C34800597AD6 /* PassageFormatter.swift */,
 			);
 			path = BibleMetaData;
 			sourceTree = "<group>";
@@ -109,6 +116,8 @@
 			children = (
 				8E1AB16F1E32B1760091048F /* Info.plist */,
 				8E1AB18B1E32B28C0091048F /* BibleMetaDataTests.swift */,
+				8EFF66B51E32C3F200597AD6 /* BiblePassageFormatterTests.swift */,
+				8EFF66B71E32C44700597AD6 /* BibleReferenceTests.swift */,
 			);
 			path = BibleMetaDataTests;
 			sourceTree = "<group>";
@@ -235,6 +244,7 @@
 				8E1AB1841E32B1900091048F /* Testament.swift in Sources */,
 				8E1AB18E1E32B2B70091048F /* StringRegexCaptures.swift in Sources */,
 				8E1AB1881E32B1900091048F /* BiblePassage.swift in Sources */,
+				8EFF66B41E32C34800597AD6 /* PassageFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +252,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EFF66B61E32C3F200597AD6 /* BiblePassageFormatterTests.swift in Sources */,
 				8E1AB18C1E32B28C0091048F /* BibleMetaDataTests.swift in Sources */,
+				8EFF66B81E32C44700597AD6 /* BibleReferenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +454,7 @@
 				8E1AB1751E32B1760091048F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8E1AB1761E32B1760091048F /* Build configuration list for PBXNativeTarget "BibleMetaDataTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +463,7 @@
 				8E1AB1781E32B1760091048F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

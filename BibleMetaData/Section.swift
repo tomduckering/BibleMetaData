@@ -23,7 +23,7 @@ enum Section: String {
     case Apocalyptic
 }
 
-extension Bible {
+extension BibleBook {
     //TODO - need to complete the categorisation
     func categories() -> [Section] {
         switch self {

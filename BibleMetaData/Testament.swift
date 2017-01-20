@@ -13,7 +13,7 @@ enum Testament:String {
     case New
 }
 
-extension Bible {
+extension BibleBook {
     func testament() -> Testament {
         switch self {
         case .Genesis, .Exodus, .Leviticus, .Numbers, .Deuteronomy, .Joshua, .Judges, .Ruth, .First_Samuel, .Second_Samuel, .First_Kings, .Second_Kings, .First_Chronicles, .Second_Chronicles, .Ezra, .Nehemiah, .Esther, .Job, .Psalms, .Proverbs, .Ecclesiastes, .Song_of_Solomon, .Isaiah, .Jeremiah, .Lamentations, .Ezekiel, .Daniel, .Hosea, .Joel, .Amos, .Obadiah, .Jonah, .Micah, .Nahum, .Habakkuk, .Zephaniah, .Haggai, .Zechariah, .Malachi:
@@ -23,11 +23,11 @@ extension Bible {
         }
     }
     
-    static func newTestamentBooks() -> [Bible] {
+    static func newTestamentBooks() -> [BibleBook] {
         return allBooks().filter { book in book.testament() == .New }
     }
     
-    static func oldTestamentBooks() -> [Bible] {
+    static func oldTestamentBooks() -> [BibleBook] {
         return allBooks().filter { book in book.testament() == .Old }
     }
     

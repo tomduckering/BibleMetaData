@@ -9,11 +9,12 @@
 import Foundation
 
 struct BibleReference {
-    let book: Bible
+    
+    let book: BibleBook
     let chapterNumber: ChapterNumber
     let verseNumber: VerseNumber
     
-    init?(withBook book: Bible, chapter: ChapterNumber = 1, andVerse verse: VerseNumber = 1) {
+    init?(withBook book: BibleBook, chapter: ChapterNumber = 1, andVerse verse: VerseNumber = 1) {
         
         self.book = book
         self.chapterNumber = chapter
@@ -39,26 +40,22 @@ struct BibleReference {
         case 0:
             return nil
         case 1:
-            guard let book = Bible.findBook(withName: captures[0])
+            guard let book = BibleBook.findBook(withName: captures[0])
                 else {
                     return nil
             }
-            self.book = book
-            self.chapterNumber = 1
-            self.verseNumber = 1
+            self.init(withBook: book,chapter: 1,andVerse: 1)
         case 2:
-            guard let book = Bible.findBook(withName: captures[0])
+            guard let book = BibleBook.findBook(withName: captures[0])
                 else {
                     return nil
             }
             guard let chapterNumber = Int(captures[1]) else {
                 return nil
             }
-            self.book = book
-            self.chapterNumber = chapterNumber
-            self.verseNumber = 1
+            self.init(withBook: book,chapter: chapterNumber, andVerse: 1)
         case 3:
-            guard let book = Bible.findBook(withName: captures[0])
+            guard let book = BibleBook.findBook(withName: captures[0])
                 else {
                     return nil
             }
@@ -69,21 +66,19 @@ struct BibleReference {
             guard let verseNumber = Int(captures[2]) else {
                 return nil
             }
-            self.book = book
-            self.chapterNumber = chapterNumber
-            self.verseNumber = verseNumber
+            self.init(withBook: book,chapter: chapterNumber,andVerse: verseNumber)
         default:
             return nil
         }
     }
     
     static func startOfBible() -> BibleReference {
-        let firstBook = Bible(rawValue: 0)!
+        let firstBook = BibleBook(rawValue: 0)!
         return firstBook.startingReference()
     }
     
     static func endOfBible() -> BibleReference {
-        let lastBook = Bible.allBooks().last!
+        let lastBook = BibleBook.allBooks().last!
         return lastBook.endReference()
     }
     

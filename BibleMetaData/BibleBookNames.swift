@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Bible {
+extension BibleBook {
     func name() -> String {
         switch self {
         case .Genesis:
@@ -144,6 +144,15 @@ extension Bible {
             return "Jude"
         case .Revelation:
             return "Revelation"
+        }
+    }
+    
+    func alternativeNames() -> [String] {
+        switch self {
+        case .Song_of_Solomon:
+            return [self.name(),"Song of Songs"]
+        default:
+            return [self.name()]
         }
     }
 }

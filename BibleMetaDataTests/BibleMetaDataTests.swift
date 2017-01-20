@@ -11,57 +11,22 @@ import XCTest
 
 class BibleMetaDataTests: XCTestCase {
     
-    func testCanCreateBibleReference() {
-        let matthew_one_one = BibleReference(withBook: .Matthew, chapter: 1, andVerse: 1)!
-        
-        XCTAssertEqual(matthew_one_one.book,Bible.Matthew)
-        XCTAssertEqual(matthew_one_one.chapterNumber,1)
-        XCTAssertEqual(matthew_one_one.verseNumber, 1)
-    }
-    
-    func testCanCreateBibleReferenceWithNoVerse() {
-        let matt_chapter_one = BibleReference(withBook: .Matthew, chapter:1)!
-        
-        XCTAssertEqual(matt_chapter_one.book,Bible.Matthew)
-        XCTAssertEqual(matt_chapter_one.chapterNumber,1)
-        XCTAssertEqual(matt_chapter_one.verseNumber, 1)
-    }
-    
-    func testCanCreateBibleReferenceWithNoChapterOrVerse() {
-        let matt_chapter_one = BibleReference(withBook: .Matthew)!
-        
-        XCTAssertEqual(matt_chapter_one.book,Bible.Matthew)
-        XCTAssertEqual(matt_chapter_one.chapterNumber,1)
-        XCTAssertEqual(matt_chapter_one.verseNumber, 1)
-    }
-    
-    func testCanNotCreateInvalidBibleReferenceChapters() {
-        let revelation_chapter_23 = BibleReference(withBook: .Revelation, chapter: 23)
-        
-        XCTAssertNil(revelation_chapter_23)
-    }
-    
-    func testCanNotCreateInvalidBibleReferenceVerses() {
-        let revelation_chapter_22_22 = BibleReference(withBook: .Revelation, chapter: 22, andVerse: 22)
-        
-        XCTAssertNil(revelation_chapter_22_22)
-    }
-    
+       
     func testCanListAllBooksOfTheBible() {
-        let books: [Bible] = Bible.allBooks()
+        let books: [BibleBook] = BibleBook.allBooks()
         XCTAssertEqual(books.count,66)
     }
     
     func testCanListAllNewTestamentBooksOfTheBible() {
-        let newTestamentbooks: [Bible] = Bible.newTestamentBooks()
+        let newTestamentbooks: [BibleBook] = BibleBook.newTestamentBooks()
         
         XCTAssertEqual(newTestamentbooks.count, 27)
     }
     
     func testCanGetBooksBeforeAGivenBook() {
-        let expectedBooksBeforeDeut: [Bible] = [.Genesis, .Exodus,.Leviticus,.Numbers]
+        let expectedBooksBeforeDeut: [BibleBook] = [.Genesis, .Exodus,.Leviticus,.Numbers]
         
-        let booksBeforeDeut = Bible.Deuteronomy.booksBefore()
+        let booksBeforeDeut = BibleBook.Deuteronomy.booksBefore()
         
         XCTAssertEqual(booksBeforeDeut, expectedBooksBeforeDeut)
     }
@@ -69,7 +34,7 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetNumberOfPriorVerses() {
         let expectedNumberOfVersesInGenesisAndExodus = 1533 + 1213
         
-        let numberOfVersesBeforeLeviticus = Bible.Leviticus.versesPriorTo()
+        let numberOfVersesBeforeLeviticus = BibleBook.Leviticus.versesPriorTo()
         
         XCTAssertEqual(numberOfVersesBeforeLeviticus, expectedNumberOfVersesInGenesisAndExodus)
     }
@@ -77,7 +42,7 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetNumberOfPriorVersesInABook() {
         let expectNumberOfVersesInFirst9ChaptersOfGenesis = 31  + 25  + 24  + 26  + 32  + 22  + 24  + 22  + 29
         
-        let numberOfVersesPriorToChapter10OfGenesis = Bible.Genesis.numberOfVerses(beforeChapter: 10)
+        let numberOfVersesPriorToChapter10OfGenesis = BibleBook.Genesis.numberOfVerses(beforeChapter: 10)
         
         XCTAssertEqual(numberOfVersesPriorToChapter10OfGenesis, expectNumberOfVersesInFirst9ChaptersOfGenesis)
     }
@@ -95,7 +60,7 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGiveMeTheStartOfTheBible() {
         let startOfBible = BibleReference.startOfBible()
         
-        XCTAssertEqual(startOfBible.book, Bible.Genesis)
+        XCTAssertEqual(startOfBible.book, BibleBook.Genesis)
         XCTAssertEqual(startOfBible.chapterNumber, 1)
         XCTAssertEqual(startOfBible.verseNumber, 1)
     }
@@ -103,33 +68,33 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGiveMeTheEndOfTheBible() {
         let endOfBible = BibleReference.endOfBible()
         
-        XCTAssertEqual(endOfBible.book, Bible.Revelation)
+        XCTAssertEqual(endOfBible.book, BibleBook.Revelation)
         XCTAssertEqual(endOfBible.chapterNumber, 22)
         XCTAssertEqual(endOfBible.verseNumber, 21)
     }
     
     func testCanGetNextBookOfTheBible() {
-        let genesis = Bible.Genesis
-        let expectedNextBook = Bible.Exodus
+        let genesis = BibleBook.Genesis
+        let expectedNextBook = BibleBook.Exodus
         
         XCTAssertEqual(genesis.nextBook(), expectedNextBook)
     }
     
     func testCanGetNextBookOfTheBibleWhenThereIsNoNextBook() {
-        let revelation = Bible.Revelation
+        let revelation = BibleBook.Revelation
         
         XCTAssertNil(revelation.nextBook())
     }
     
     func testCanGetPreviousBookOfTheBible() {
-        let revelation = Bible.Revelation
-        let expectedPreviousBook = Bible.Jude
+        let revelation = BibleBook.Revelation
+        let expectedPreviousBook = BibleBook.Jude
         
         XCTAssertEqual(revelation.previousBook(), expectedPreviousBook)
     }
     
     func testCanGetPreviousBookOfTheBibleWhenThereIsNoPreviousBook() {
-        let genesis = Bible.Genesis
+        let genesis = BibleBook.Genesis
         
         XCTAssertNil(genesis.previousBook())
     }
@@ -137,9 +102,9 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetGenesis1v1FromAbsoluteVerseNumber() {
         let absoluteVerseNumber:AbsoluteVerseNumber = 1
         
-        let reference = Bible.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
+        let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
         
-        XCTAssertEqual(reference?.book, Bible.Genesis)
+        XCTAssertEqual(reference?.book, BibleBook.Genesis)
         XCTAssertEqual(reference?.chapterNumber,1)
         XCTAssertEqual(reference?.verseNumber, 1)
     }
@@ -147,9 +112,9 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetGenesis2v1FromAbsoluteVerseNumber() {
         let absoluteVerseNumber:AbsoluteVerseNumber = 32
         
-        let reference = Bible.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
+        let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
         
-        XCTAssertEqual(reference?.book, Bible.Genesis)
+        XCTAssertEqual(reference?.book, BibleBook.Genesis)
         XCTAssertEqual(reference?.chapterNumber,2)
         XCTAssertEqual(reference?.verseNumber, 1)
     }
@@ -157,30 +122,30 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetGenesis50v26FromAbsoluteVerseNumber() {
         let absoluteVerseNumber:AbsoluteVerseNumber = 1533
         
-        let reference = Bible.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
+        let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
         
-        XCTAssertEqual(reference?.book, Bible.Genesis)
+        XCTAssertEqual(reference?.book, BibleBook.Genesis)
         XCTAssertEqual(reference?.chapterNumber,50)
         XCTAssertEqual(reference?.verseNumber, 26)
     }
     
     func testThatEstherIsSeventeenthBookOfBible() {
-        XCTAssertEqual(Bible.allBooks()[16], Bible.Esther)
-        XCTAssertEqual(Bible.allBooks()[21], Bible.Song_of_Solomon)
-        XCTAssertEqual(Bible.allBooks()[26], Bible.Daniel)
-        XCTAssertEqual(Bible.allBooks()[38], Bible.Malachi)
+        XCTAssertEqual(BibleBook.allBooks()[16], BibleBook.Esther)
+        XCTAssertEqual(BibleBook.allBooks()[21], BibleBook.Song_of_Solomon)
+        XCTAssertEqual(BibleBook.allBooks()[26], BibleBook.Daniel)
+        XCTAssertEqual(BibleBook.allBooks()[38], BibleBook.Malachi)
     }
     
     func testThatEstherHasTenChapters() {
-        XCTAssertEqual(Bible.Esther.numberOfChapters(), 10)
+        XCTAssertEqual(BibleBook.Esther.numberOfChapters(), 10)
     }
     
     func testThatDanielHasTwelveChapters() {
-        XCTAssertEqual(Bible.Daniel.numberOfChapters(), 12)
+        XCTAssertEqual(BibleBook.Daniel.numberOfChapters(), 12)
     }
     
     func testThatTheRightNumberOfChaptersInTheBible() {
-        let numberOfChaptersInTheBible = Bible.allBooks().map {book in book.numberOfChapters()}.reduce(0,+)
+        let numberOfChaptersInTheBible = BibleBook.allBooks().map {book in book.numberOfChapters()}.reduce(0,+)
         
         let expectedNumberOfChaptersInTheBible = 1189
         
@@ -188,140 +153,140 @@ class BibleMetaDataTests: XCTestCase {
     }
     
     func testThatTheRightNumberOfVersesInTheOldTestament() {
-        let numberOfVersesInTheOldTestament = Bible.oldTestamentBooks().map { book in book.numberOfVerses()}.reduce(0,+)
+        let numberOfVersesInTheOldTestament = BibleBook.oldTestamentBooks().map { book in book.numberOfVerses()}.reduce(0,+)
         let expectedNumberOfVersesInTheOldTestament = 23145
         
         XCTAssertEqual(numberOfVersesInTheOldTestament, expectedNumberOfVersesInTheOldTestament)
     }
     
     func testThatTheRightNumberOfVersesInTheBible() {
-        let numberOfVersesInTheOldTestament = Bible.allBooks().map { book in book.numberOfVerses()}.reduce(0,+)
+        let numberOfVersesInTheOldTestament = BibleBook.allBooks().map { book in book.numberOfVerses()}.reduce(0,+)
         let expectedNumberOfVersesInTheOldTestament = 31088
         
         XCTAssertEqual(numberOfVersesInTheOldTestament, expectedNumberOfVersesInTheOldTestament)
     }
     
     func testRightNumberOfChaptersInEachBook() {
-        XCTAssertEqual(Bible.Genesis.numberOfChapters(), 50)
-        XCTAssertEqual(Bible.Exodus.numberOfChapters(), 40)
-        XCTAssertEqual(Bible.Leviticus.numberOfChapters(), 27)
-        XCTAssertEqual(Bible.Numbers.numberOfChapters(), 36)
-        XCTAssertEqual(Bible.Deuteronomy.numberOfChapters(), 34)
-        XCTAssertEqual(Bible.Joshua.numberOfChapters(), 24)
-        XCTAssertEqual(Bible.Judges.numberOfChapters(), 21)
-        XCTAssertEqual(Bible.Ruth.numberOfChapters(), 4)
-        XCTAssertEqual(Bible.First_Samuel.numberOfChapters(), 31)
-        XCTAssertEqual(Bible.Second_Samuel.numberOfChapters(), 24)
-        XCTAssertEqual(Bible.First_Kings.numberOfChapters(), 22)
-        XCTAssertEqual(Bible.Second_Kings.numberOfChapters(), 25)
-        XCTAssertEqual(Bible.First_Chronicles.numberOfChapters(), 29)
-        XCTAssertEqual(Bible.Second_Chronicles.numberOfChapters(), 36)
-        XCTAssertEqual(Bible.Ezra.numberOfChapters(), 10)
-        XCTAssertEqual(Bible.Nehemiah.numberOfChapters(), 13)
-        XCTAssertEqual(Bible.Esther.numberOfChapters(), 10)
-        XCTAssertEqual(Bible.Job.numberOfChapters(), 42)
-        XCTAssertEqual(Bible.Psalms.numberOfChapters(), 150)
-        XCTAssertEqual(Bible.Proverbs.numberOfChapters(), 31)
-        XCTAssertEqual(Bible.Ecclesiastes.numberOfChapters(), 12)
-        XCTAssertEqual(Bible.Song_of_Solomon.numberOfChapters(), 8)
-        XCTAssertEqual(Bible.Isaiah.numberOfChapters(), 66)
-        XCTAssertEqual(Bible.Jeremiah.numberOfChapters(), 52)
-        XCTAssertEqual(Bible.Lamentations.numberOfChapters(), 5)
-        XCTAssertEqual(Bible.Ezekiel.numberOfChapters(), 48)
-        XCTAssertEqual(Bible.Daniel.numberOfChapters(), 12)
-        XCTAssertEqual(Bible.Hosea.numberOfChapters(), 14)
-        XCTAssertEqual(Bible.Joel.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.Amos.numberOfChapters(), 9)
-        XCTAssertEqual(Bible.Obadiah.numberOfChapters(), 1)
-        XCTAssertEqual(Bible.Jonah.numberOfChapters(), 4)
-        XCTAssertEqual(Bible.Micah.numberOfChapters(), 7)
-        XCTAssertEqual(Bible.Nahum.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.Habakkuk.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.Zephaniah.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.Haggai.numberOfChapters(), 2)
-        XCTAssertEqual(Bible.Zechariah.numberOfChapters(), 14)
-        XCTAssertEqual(Bible.Malachi.numberOfChapters(), 4)
+        XCTAssertEqual(BibleBook.Genesis.numberOfChapters(), 50)
+        XCTAssertEqual(BibleBook.Exodus.numberOfChapters(), 40)
+        XCTAssertEqual(BibleBook.Leviticus.numberOfChapters(), 27)
+        XCTAssertEqual(BibleBook.Numbers.numberOfChapters(), 36)
+        XCTAssertEqual(BibleBook.Deuteronomy.numberOfChapters(), 34)
+        XCTAssertEqual(BibleBook.Joshua.numberOfChapters(), 24)
+        XCTAssertEqual(BibleBook.Judges.numberOfChapters(), 21)
+        XCTAssertEqual(BibleBook.Ruth.numberOfChapters(), 4)
+        XCTAssertEqual(BibleBook.First_Samuel.numberOfChapters(), 31)
+        XCTAssertEqual(BibleBook.Second_Samuel.numberOfChapters(), 24)
+        XCTAssertEqual(BibleBook.First_Kings.numberOfChapters(), 22)
+        XCTAssertEqual(BibleBook.Second_Kings.numberOfChapters(), 25)
+        XCTAssertEqual(BibleBook.First_Chronicles.numberOfChapters(), 29)
+        XCTAssertEqual(BibleBook.Second_Chronicles.numberOfChapters(), 36)
+        XCTAssertEqual(BibleBook.Ezra.numberOfChapters(), 10)
+        XCTAssertEqual(BibleBook.Nehemiah.numberOfChapters(), 13)
+        XCTAssertEqual(BibleBook.Esther.numberOfChapters(), 10)
+        XCTAssertEqual(BibleBook.Job.numberOfChapters(), 42)
+        XCTAssertEqual(BibleBook.Psalms.numberOfChapters(), 150)
+        XCTAssertEqual(BibleBook.Proverbs.numberOfChapters(), 31)
+        XCTAssertEqual(BibleBook.Ecclesiastes.numberOfChapters(), 12)
+        XCTAssertEqual(BibleBook.Song_of_Solomon.numberOfChapters(), 8)
+        XCTAssertEqual(BibleBook.Isaiah.numberOfChapters(), 66)
+        XCTAssertEqual(BibleBook.Jeremiah.numberOfChapters(), 52)
+        XCTAssertEqual(BibleBook.Lamentations.numberOfChapters(), 5)
+        XCTAssertEqual(BibleBook.Ezekiel.numberOfChapters(), 48)
+        XCTAssertEqual(BibleBook.Daniel.numberOfChapters(), 12)
+        XCTAssertEqual(BibleBook.Hosea.numberOfChapters(), 14)
+        XCTAssertEqual(BibleBook.Joel.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.Amos.numberOfChapters(), 9)
+        XCTAssertEqual(BibleBook.Obadiah.numberOfChapters(), 1)
+        XCTAssertEqual(BibleBook.Jonah.numberOfChapters(), 4)
+        XCTAssertEqual(BibleBook.Micah.numberOfChapters(), 7)
+        XCTAssertEqual(BibleBook.Nahum.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.Habakkuk.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.Zephaniah.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.Haggai.numberOfChapters(), 2)
+        XCTAssertEqual(BibleBook.Zechariah.numberOfChapters(), 14)
+        XCTAssertEqual(BibleBook.Malachi.numberOfChapters(), 4)
         
-        XCTAssertEqual(Bible.Matthew.numberOfChapters(), 28)
-        XCTAssertEqual(Bible.Mark.numberOfChapters(), 16)
-        XCTAssertEqual(Bible.Luke.numberOfChapters(), 24)
-        XCTAssertEqual(Bible.John.numberOfChapters(), 21)
+        XCTAssertEqual(BibleBook.Matthew.numberOfChapters(), 28)
+        XCTAssertEqual(BibleBook.Mark.numberOfChapters(), 16)
+        XCTAssertEqual(BibleBook.Luke.numberOfChapters(), 24)
+        XCTAssertEqual(BibleBook.John.numberOfChapters(), 21)
         
-        XCTAssertEqual(Bible.Acts.numberOfChapters(), 28)
-        XCTAssertEqual(Bible.Romans.numberOfChapters(), 16)
-        XCTAssertEqual(Bible.Mark.numberOfChapters(), 16)
-        XCTAssertEqual(Bible.First_Corinthians.numberOfChapters(), 16)
-        XCTAssertEqual(Bible.Second_Corinthians.numberOfChapters(), 13)
-        XCTAssertEqual(Bible.Galatians.numberOfChapters(), 6)
-        XCTAssertEqual(Bible.Ephesians.numberOfChapters(), 6)
-        XCTAssertEqual(Bible.Philippians.numberOfChapters(), 4)
-        XCTAssertEqual(Bible.Colossians.numberOfChapters(), 4)
-        XCTAssertEqual(Bible.First_Thessalonians.numberOfChapters(), 5)
-        XCTAssertEqual(Bible.Second_Thessalonians.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.First_Timothy.numberOfChapters(), 6)
-        XCTAssertEqual(Bible.Second_Timothy.numberOfChapters(), 4)
-        XCTAssertEqual(Bible.Titus.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.Philemon.numberOfChapters(), 1)
-        XCTAssertEqual(Bible.Hebrews.numberOfChapters(), 13)
-        XCTAssertEqual(Bible.James.numberOfChapters(), 5)
-        XCTAssertEqual(Bible.First_Peter.numberOfChapters(), 5)
-        XCTAssertEqual(Bible.Second_Peter.numberOfChapters(), 3)
-        XCTAssertEqual(Bible.First_John.numberOfChapters(), 5)
-        XCTAssertEqual(Bible.Second_John.numberOfChapters(), 1)
-        XCTAssertEqual(Bible.Third_John.numberOfChapters(), 1)
-        XCTAssertEqual(Bible.Jude.numberOfChapters(), 1)
-        XCTAssertEqual(Bible.Revelation.numberOfChapters(), 22)
+        XCTAssertEqual(BibleBook.Acts.numberOfChapters(), 28)
+        XCTAssertEqual(BibleBook.Romans.numberOfChapters(), 16)
+        XCTAssertEqual(BibleBook.Mark.numberOfChapters(), 16)
+        XCTAssertEqual(BibleBook.First_Corinthians.numberOfChapters(), 16)
+        XCTAssertEqual(BibleBook.Second_Corinthians.numberOfChapters(), 13)
+        XCTAssertEqual(BibleBook.Galatians.numberOfChapters(), 6)
+        XCTAssertEqual(BibleBook.Ephesians.numberOfChapters(), 6)
+        XCTAssertEqual(BibleBook.Philippians.numberOfChapters(), 4)
+        XCTAssertEqual(BibleBook.Colossians.numberOfChapters(), 4)
+        XCTAssertEqual(BibleBook.First_Thessalonians.numberOfChapters(), 5)
+        XCTAssertEqual(BibleBook.Second_Thessalonians.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.First_Timothy.numberOfChapters(), 6)
+        XCTAssertEqual(BibleBook.Second_Timothy.numberOfChapters(), 4)
+        XCTAssertEqual(BibleBook.Titus.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.Philemon.numberOfChapters(), 1)
+        XCTAssertEqual(BibleBook.Hebrews.numberOfChapters(), 13)
+        XCTAssertEqual(BibleBook.James.numberOfChapters(), 5)
+        XCTAssertEqual(BibleBook.First_Peter.numberOfChapters(), 5)
+        XCTAssertEqual(BibleBook.Second_Peter.numberOfChapters(), 3)
+        XCTAssertEqual(BibleBook.First_John.numberOfChapters(), 5)
+        XCTAssertEqual(BibleBook.Second_John.numberOfChapters(), 1)
+        XCTAssertEqual(BibleBook.Third_John.numberOfChapters(), 1)
+        XCTAssertEqual(BibleBook.Jude.numberOfChapters(), 1)
+        XCTAssertEqual(BibleBook.Revelation.numberOfChapters(), 22)
     }
     
     func testRightNumberOfVersesInEachBook() {
-        XCTAssertEqual(Bible.Genesis.numberOfVerses(), 1533)
-        XCTAssertEqual(Bible.Exodus.numberOfVerses(), 1213)
-        XCTAssertEqual(Bible.Leviticus.numberOfVerses(), 859)
-        XCTAssertEqual(Bible.Numbers.numberOfVerses(), 1288)
-        XCTAssertEqual(Bible.Deuteronomy.numberOfVerses(), 959)
-        XCTAssertEqual(Bible.Joshua.numberOfVerses(), 658)
-        XCTAssertEqual(Bible.Judges.numberOfVerses(), 618)
-        XCTAssertEqual(Bible.Ruth.numberOfVerses(), 85)
-        XCTAssertEqual(Bible.First_Samuel.numberOfVerses(), 810)
-        XCTAssertEqual(Bible.Second_Samuel.numberOfVerses(), 695)
-        XCTAssertEqual(Bible.First_Kings.numberOfVerses(), 816)
-        XCTAssertEqual(Bible.Second_Kings.numberOfVerses(), 719)
-        XCTAssertEqual(Bible.First_Chronicles.numberOfVerses(), 942)
-        XCTAssertEqual(Bible.Second_Chronicles.numberOfVerses(), 822)
-        XCTAssertEqual(Bible.Ezra.numberOfVerses(), 280)
-        XCTAssertEqual(Bible.Nehemiah.numberOfVerses(), 406)
-        XCTAssertEqual(Bible.Esther.numberOfVerses(), 167)
-        XCTAssertEqual(Bible.Job.numberOfVerses(), 1070)
-        XCTAssertEqual(Bible.Psalms.numberOfVerses(), 2461)
-        XCTAssertEqual(Bible.Proverbs.numberOfVerses(), 915)
-        XCTAssertEqual(Bible.Ecclesiastes.numberOfVerses(), 222)
-        XCTAssertEqual(Bible.Song_of_Solomon.numberOfVerses(), 117)
-        XCTAssertEqual(Bible.Isaiah.numberOfVerses(), 1292)
-        XCTAssertEqual(Bible.Jeremiah.numberOfVerses(), 1364)
-        XCTAssertEqual(Bible.Lamentations.numberOfVerses(), 154)
-        XCTAssertEqual(Bible.Ezekiel.numberOfVerses(), 1273)
-        XCTAssertEqual(Bible.Daniel.numberOfVerses(), 357)
-        XCTAssertEqual(Bible.Hosea.numberOfVerses(), 197)
-        XCTAssertEqual(Bible.Joel.numberOfVerses(), 73)
-        XCTAssertEqual(Bible.Amos.numberOfVerses(), 146)
-        XCTAssertEqual(Bible.Obadiah.numberOfVerses(), 21)
-        XCTAssertEqual(Bible.Jonah.numberOfVerses(), 48)
-        XCTAssertEqual(Bible.Micah.numberOfVerses(), 105)
-        XCTAssertEqual(Bible.Nahum.numberOfVerses(), 47)
-        XCTAssertEqual(Bible.Habakkuk.numberOfVerses(), 56)
-        XCTAssertEqual(Bible.Zephaniah.numberOfVerses(), 53)
-        XCTAssertEqual(Bible.Haggai.numberOfVerses(), 38)
-        XCTAssertEqual(Bible.Zechariah.numberOfVerses(), 211)
-        XCTAssertEqual(Bible.Malachi.numberOfVerses(), 55)
+        XCTAssertEqual(BibleBook.Genesis.numberOfVerses(), 1533)
+        XCTAssertEqual(BibleBook.Exodus.numberOfVerses(), 1213)
+        XCTAssertEqual(BibleBook.Leviticus.numberOfVerses(), 859)
+        XCTAssertEqual(BibleBook.Numbers.numberOfVerses(), 1288)
+        XCTAssertEqual(BibleBook.Deuteronomy.numberOfVerses(), 959)
+        XCTAssertEqual(BibleBook.Joshua.numberOfVerses(), 658)
+        XCTAssertEqual(BibleBook.Judges.numberOfVerses(), 618)
+        XCTAssertEqual(BibleBook.Ruth.numberOfVerses(), 85)
+        XCTAssertEqual(BibleBook.First_Samuel.numberOfVerses(), 810)
+        XCTAssertEqual(BibleBook.Second_Samuel.numberOfVerses(), 695)
+        XCTAssertEqual(BibleBook.First_Kings.numberOfVerses(), 816)
+        XCTAssertEqual(BibleBook.Second_Kings.numberOfVerses(), 719)
+        XCTAssertEqual(BibleBook.First_Chronicles.numberOfVerses(), 942)
+        XCTAssertEqual(BibleBook.Second_Chronicles.numberOfVerses(), 822)
+        XCTAssertEqual(BibleBook.Ezra.numberOfVerses(), 280)
+        XCTAssertEqual(BibleBook.Nehemiah.numberOfVerses(), 406)
+        XCTAssertEqual(BibleBook.Esther.numberOfVerses(), 167)
+        XCTAssertEqual(BibleBook.Job.numberOfVerses(), 1070)
+        XCTAssertEqual(BibleBook.Psalms.numberOfVerses(), 2461)
+        XCTAssertEqual(BibleBook.Proverbs.numberOfVerses(), 915)
+        XCTAssertEqual(BibleBook.Ecclesiastes.numberOfVerses(), 222)
+        XCTAssertEqual(BibleBook.Song_of_Solomon.numberOfVerses(), 117)
+        XCTAssertEqual(BibleBook.Isaiah.numberOfVerses(), 1292)
+        XCTAssertEqual(BibleBook.Jeremiah.numberOfVerses(), 1364)
+        XCTAssertEqual(BibleBook.Lamentations.numberOfVerses(), 154)
+        XCTAssertEqual(BibleBook.Ezekiel.numberOfVerses(), 1273)
+        XCTAssertEqual(BibleBook.Daniel.numberOfVerses(), 357)
+        XCTAssertEqual(BibleBook.Hosea.numberOfVerses(), 197)
+        XCTAssertEqual(BibleBook.Joel.numberOfVerses(), 73)
+        XCTAssertEqual(BibleBook.Amos.numberOfVerses(), 146)
+        XCTAssertEqual(BibleBook.Obadiah.numberOfVerses(), 21)
+        XCTAssertEqual(BibleBook.Jonah.numberOfVerses(), 48)
+        XCTAssertEqual(BibleBook.Micah.numberOfVerses(), 105)
+        XCTAssertEqual(BibleBook.Nahum.numberOfVerses(), 47)
+        XCTAssertEqual(BibleBook.Habakkuk.numberOfVerses(), 56)
+        XCTAssertEqual(BibleBook.Zephaniah.numberOfVerses(), 53)
+        XCTAssertEqual(BibleBook.Haggai.numberOfVerses(), 38)
+        XCTAssertEqual(BibleBook.Zechariah.numberOfVerses(), 211)
+        XCTAssertEqual(BibleBook.Malachi.numberOfVerses(), 55)
     }
     
     
     func testCanGetMalachi4v24FromAbsoluteVerseNumber() {
         let absoluteVerseNumber:AbsoluteVerseNumber = 23145
         
-        let reference = Bible.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
+        let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
         
-        XCTAssertEqual(reference?.book, Bible.Malachi)
+        XCTAssertEqual(reference?.book, BibleBook.Malachi)
         XCTAssertEqual(reference?.chapterNumber,4)
         XCTAssertEqual(reference?.verseNumber, 6)
     }
@@ -329,9 +294,9 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetRevelation22v21FromAbsoluteVerseNumber() {
         let absoluteVerseNumber:AbsoluteVerseNumber = 31088
         
-        let reference = Bible.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
+        let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
         
-        XCTAssertEqual(reference?.book, Bible.Revelation)
+        XCTAssertEqual(reference?.book, BibleBook.Revelation)
         XCTAssertEqual(reference?.chapterNumber,22)
         XCTAssertEqual(reference?.verseNumber, 21)
     }
@@ -339,128 +304,25 @@ class BibleMetaDataTests: XCTestCase {
     func testCanGetNameForBook() {
         let expectedBookName = "Genesis"
         
-        XCTAssertEqual(Bible.Genesis.name(), expectedBookName)
-    }
-    
-    func testCanGenerateStringFromBibleReference() {
-        
-        let expectedString = "Genesis 1:4"
-        let reference = BibleReference(withBook: .Genesis,chapter:1,andVerse: 4)
-        
-        let string = reference?.formatAsString()
-        
-        XCTAssertEqual(string, expectedString)
+        XCTAssertEqual(BibleBook.Genesis.name(), expectedBookName)
     }
     
     
-    
-    func testCanCreateBiblePassageFromBibleReferences() {
-        let start = BibleReference(withBook:.Genesis)!
-        let end = BibleReference(withBook: .Revelation,chapter:22, andVerse:21)!
-        
-        let passage = BiblePassage(start: start,end: end)
-        
-        XCTAssertNotNil(passage)
-    }
-    
-    func testCanGenerateStringFromBiblePassage() {
-        let expectedString = "Genesis 1:4-5"
-        
-        let start = BibleReference(withBook:.Genesis,chapter:1, andVerse:4)!
-        let end = BibleReference(withBook:.Genesis,chapter:1, andVerse:5)!
-        let passage = BiblePassage(start: start, end: end)
-        
-        let formatter = BasicBiblePassageStringFormatter()
-        
-        let passageString = formatter.string(from: passage)
-        
-        XCTAssertEqual(passageString, expectedString)
-    }
-    
-    func testCanGenerateStringFromChapterSpanningBiblePassage() {
-        let expectedString = "Genesis 1:4-2:5"
-        
-        let start = BibleReference(withBook:.Genesis,chapter:1, andVerse:4)!
-        let end = BibleReference(withBook:.Genesis,chapter:2, andVerse:5)!
-        let passage = BiblePassage(start: start, end: end)
-        
-        let formatter = BasicBiblePassageStringFormatter()
-        
-        let passageString = formatter.string(from: passage)
-        
-        XCTAssertEqual(passageString, expectedString)
-    }
-    
-    func testCanGenerateStringFromBookSpanningBiblePassage() {
-        let expectedString = "Genesis 1:4-Exodus 2:5"
-        
-        let start = BibleReference(withBook:.Genesis,chapter:1, andVerse:4)!
-        let end = BibleReference(withBook:.Exodus,chapter:2, andVerse:5)!
-        let passage = BiblePassage(start: start, end: end)
-        
-        let formatter = BasicBiblePassageStringFormatter()
-        
-        let passageString = formatter.string(from: passage)
-        
-        XCTAssertEqual(passageString, expectedString)
-    }
-    
-    func testCanGenerateStringFromWholeBiblePassage() {
-        let expectedString = "Genesis 1:1-Revelation 22:21"
-        
-        let start = BibleReference(withBook:.Genesis)!
-        let end = BibleReference(withBook:.Revelation,chapter:22, andVerse:21)!
-        let passage = BiblePassage(start: start, end: end)
-        
-        let formatter = BasicBiblePassageStringFormatter()
-        
-        let passageString = formatter.string(from: passage)
-        
-        XCTAssertEqual(passageString, expectedString)
-    }
-    
-    func testCanGenerateStringFromWholeChapterPassage() {
-        let expectedString = "Genesis 1"
-        
-        let start = BibleReference(withBook:.Genesis)!
-        let end = BibleReference(withBook:.Genesis,chapter:1, andVerse:31)!
-        let passage = BiblePassage(start: start, end: end)
-        
-        let formatter = BasicBiblePassageStringFormatter()
-        
-        let passageString = formatter.string(from: passage)
-        
-        XCTAssertEqual(passageString, expectedString)
-    }
-    
-    func testCanGenerateStringFromWholeBookPassage() {
-        let expectedString = "Genesis"
-        
-        let start = BibleReference(withBook:.Genesis)!
-        let end = BibleReference(withBook:.Genesis,chapter:50, andVerse:26)!
-        let passage = BiblePassage(start: start, end: end)
-        
-        let formatter = BasicBiblePassageStringFormatter()
-        
-        let passageString = formatter.string(from: passage)
-        
-        XCTAssertEqual(passageString, expectedString)
-    }
     
     func testCanGetBookWithName() {
-        XCTAssertEqual(Bible.findBook(withName: "Genesis"), Bible.Genesis)
+        XCTAssertEqual(BibleBook.findBook(withName: "Genesis"), BibleBook.Genesis)
     }
     
     func testCanGetNilWhenNameIsGarbage() {
-        XCTAssertNil(Bible.findBook(withName: "Thomas"))
+        XCTAssertNil(BibleBook.findBook(withName: "Thomas"))
     }
     
     func testCanGetBooksWithShortenedName() {
-        XCTAssertEqual(Bible.getBook(whereNameStartsWith: "Ge"), Bible.Genesis)
+        XCTAssertEqual(BibleBook.getBook(whereNameStartsWith: "Ge"), BibleBook.Genesis)
     }
     
     func testGetsNilWhenUsingAmbiguousPrefix() {
-        XCTAssertNil(Bible.getBook(whereNameStartsWith: "G"))
+        XCTAssertNil(BibleBook.getBook(whereNameStartsWith: "G"))
     }
     
     func testCanGetNumberOfVersesInPassage() {
@@ -474,33 +336,6 @@ class BibleMetaDataTests: XCTestCase {
         XCTAssertEqual(passageLengthInVerses, expectedPassageLengthInVerses)
     }
     
-    func testCanCreateBibleReferenceFromBasicString() {
-        let inputString = "Genesis 1:1"
-        
-        guard let parsedReference = BibleReference(fromString: inputString)
-            else {
-                XCTFail("unable to parse reference")
-                return
-        }
-        
-        XCTAssertEqual(parsedReference.book,Bible.Genesis)
-        XCTAssertEqual(parsedReference.chapterNumber,1)
-        XCTAssertEqual(parsedReference.verseNumber,1)
-    }
-    
-    func testCanCreateBibleReferenceFromStringMissingVerse() {
-        let inputString = "Genesis 1"
-        
-        guard let parsedReference = BibleReference(fromString: inputString)
-            else {
-                XCTFail("unable to parse reference")
-                return
-        }
-        
-        XCTAssertEqual(parsedReference.book,Bible.Genesis)
-        XCTAssertEqual(parsedReference.chapterNumber,1)
-        XCTAssertEqual(parsedReference.verseNumber,1)
-    }
-    
+       
     
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Bible {
+extension BibleBook {
     
     func chapterAndVerseData() -> [Int] {
         switch self {

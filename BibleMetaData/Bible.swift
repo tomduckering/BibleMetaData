@@ -8,7 +8,18 @@
 
 import Foundation
 
-enum Bible: Int {
+typealias VerseNumber = Int
+typealias ChapterNumber = Int
+typealias AbsoluteVerseNumber = Int
+
+extension ChapterNumber {
+    //Chapter numbers are indexed from 1, arrays from 0.
+    func index() -> Int {
+        return self - 1
+    }
+}
+
+enum BibleBook: Int {
     case Genesis
     case Exodus
     case Leviticus
@@ -77,9 +88,9 @@ enum Bible: Int {
     case Jude
     case Revelation
     
-    static func allBooks() -> [Bible] {
+    static func allBooks() -> [BibleBook] {
         return (0..<66).map { rawValue in
-            return Bible(rawValue: rawValue)!
+            return BibleBook(rawValue: rawValue)!
         }
     }
 }

@@ -8,26 +8,22 @@
 
 import Foundation
 
-typealias VerseNumber = Int
-typealias ChapterNumber = Int
-typealias AbsoluteVerseNumber = Int
-
-extension Bible {
+extension BibleBook {
     
     func numberOfChapters() -> Int {
         return chapterAndVerseData().count
     }
     
     func numberOfVerses(forChapter chapter: ChapterNumber) -> Int {
-        return chapterAndVerseData()[chapter-1]
+        return chapterAndVerseData()[chapter.index()]
     }
     
     func numberOfVerses() -> Int {
         return chapterAndVerseData().reduce(0,+)
     }
     
-    func booksBefore() -> [Bible] {
-        return (0..<self.rawValue).map { rawValue in return Bible(rawValue: rawValue)!}
+    func booksBefore() -> [BibleBook] {
+        return (0..<self.rawValue).map { rawValue in return BibleBook(rawValue: rawValue)!}
     }
     
     func versesPriorTo() -> Int {
@@ -48,12 +44,12 @@ extension Bible {
         return BibleReference(withBook: self, chapter: numberOfChapters(),andVerse: numberOfVerses(forChapter: numberOfChapters()))!
     }
     
-    func nextBook() -> Bible? {
-        return Bible(rawValue: self.rawValue + 1)
+    func nextBook() -> BibleBook? {
+        return BibleBook(rawValue: self.rawValue + 1)
     }
     
-    func previousBook() -> Bible? {
-        return Bible(rawValue: self.rawValue - 1)
+    func previousBook() -> BibleBook? {
+        return BibleBook(rawValue: self.rawValue - 1)
     }
     
     func reference(forAbsoluteVerseNumber absoluteVerseNumber: AbsoluteVerseNumber) -> BibleReference? {
@@ -96,7 +92,7 @@ extension Bible {
     }
     
     static func reference(withAbsoluteVerseNumber absoluteVerseNumber: AbsoluteVerseNumber) -> BibleReference? {
-        let bookContainingAbsoluteVerse = Bible.allBooks().filter { book in
+        let bookContainingAbsoluteVerse = BibleBook.allBooks().filter { book in
             let startingAbsoluteVerseNumber = book.startingReference().absoluteVerseNumber()
             let endingAbsoluteVerseNumber = book.endReference().absoluteVerseNumber()
             
@@ -106,15 +102,15 @@ extension Bible {
         return bookContainingAbsoluteVerse?.reference(forAbsoluteVerseNumber: absoluteVerseNumber)
     }
     
-    static func findBook(withName name: String) -> Bible? {
-        return Bible.allBooks().filter { book in book.name() == name }.first
+    static func findBook(withName name: String) -> BibleBook? {
+        return BibleBook.allBooks().filter { book in book.name() == name }.first
     }
     
-    static func getBooks(whereNameStartsWith prefix: String) -> [Bible] {
-        return Bible.allBooks().filter { book in book.name().hasPrefix(prefix) }
+    static func getBooks(whereNameStartsWith prefix: String) -> [BibleBook] {
+        return BibleBook.allBooks().filter { book in book.name().hasPrefix(prefix) }
     }
     
-    static func getBook(whereNameStartsWith prefix: String) -> Bible? {
+    static func getBook(whereNameStartsWith prefix: String) -> BibleBook? {
         let matchingBooks = getBooks(whereNameStartsWith: prefix)
         if matchingBooks.count > 1 {
             return nil
