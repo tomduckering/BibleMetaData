@@ -110,5 +110,5 @@ class BiblePassageTests: XCTestCase {
         XCTAssertEqual(passage.end.chapterNumber, 2)
         XCTAssertEqual(passage.end.verseNumber, 3)
     }
-    
+
 }

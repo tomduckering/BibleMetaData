@@ -9,7 +9,7 @@
 import Foundation
 
 extension BibleBook {
-    
+
     func chapterAndVerseData() -> [Int] {
         switch self {
         case .Genesis:
@@ -90,7 +90,7 @@ extension BibleBook {
             return [21, 13, 10, 14, 11, 15, 14, 23, 17, 12, 17, 14, 9, 21]
         case .Malachi:
             return [14, 17, 18, 6]
-            
+
         case .Matthew:
             return [25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 49, 58, 36, 39, 28, 26, 34, 30, 34, 46, 46, 38, 51, 46, 75, 66, 20]
         case .Mark:

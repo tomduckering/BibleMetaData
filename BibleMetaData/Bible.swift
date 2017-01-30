@@ -59,7 +59,7 @@ enum BibleBook: Int {
     case Haggai
     case Zechariah
     case Malachi
-    
+
     case Matthew
     case Mark
     case Luke
@@ -87,7 +87,7 @@ enum BibleBook: Int {
     case Third_John
     case Jude
     case Revelation
-    
+
     static func allBooks() -> [BibleBook] {
         return (0..<66).map { return BibleBook(rawValue: $0)! }
     }

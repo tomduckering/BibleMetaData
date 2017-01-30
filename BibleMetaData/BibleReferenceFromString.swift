@@ -29,7 +29,7 @@ extension BibleReference {
             guard let verseNumber = Int(captures[2]) else {
                 return nil
             }
-            self.init(withBook: book,chapter: chapterNumber,andVerse: verseNumber)
+            self.init(withBook: book, chapter: chapterNumber, andVerse: verseNumber)
         default:
             return nil
         }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Testament:String {
+enum Testament: String {
     case Old
     case New
 }
@@ -22,13 +22,13 @@ extension BibleBook {
             return .New
         }
     }
-    
+
     static func newTestamentBooks() -> [BibleBook] {
         return allBooks().filter { book in book.testament() == .New }
     }
-    
+
     static func oldTestamentBooks() -> [BibleBook] {
         return allBooks().filter { book in book.testament() == .Old }
     }
-    
+
 }

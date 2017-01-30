@@ -13,13 +13,13 @@ protocol BiblePassageStringFormatter {
 }
 
 class BasicBiblePassageStringFormatter: BiblePassageStringFormatter {
-    
+
     var bookToNumbers = " "
     var chapterToVerse = ":"
     var range = "-"
-    
+
     func string(from passage: BiblePassage) -> String {
-        
+
         if passage.start.book == passage.end.book {
             if passage.start.chapterNumber == passage.end.chapterNumber {
                 if passage.start.verseNumber == passage.end.verseNumber {

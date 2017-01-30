@@ -10,162 +10,161 @@ import XCTest
 @testable import BibleMetrics
 
 class BibleMetaDataTests: XCTestCase {
-    
-       
+
     func testCanListAllBooksOfTheBible() {
         let books: [BibleBook] = BibleBook.allBooks()
-        XCTAssertEqual(books.count,66)
+        XCTAssertEqual(books.count, 66)
     }
-    
+
     func testCanListAllNewTestamentBooksOfTheBible() {
         let newTestamentbooks: [BibleBook] = BibleBook.newTestamentBooks()
-        
+
         XCTAssertEqual(newTestamentbooks.count, 27)
     }
-    
+
     func testCanGetBooksBeforeAGivenBook() {
-        let expectedBooksBeforeDeut: [BibleBook] = [.Genesis, .Exodus,.Leviticus,.Numbers]
-        
+        let expectedBooksBeforeDeut: [BibleBook] = [.Genesis, .Exodus, .Leviticus, .Numbers]
+
         let booksBeforeDeut = BibleBook.Deuteronomy.booksBefore()
-        
+
         XCTAssertEqual(booksBeforeDeut, expectedBooksBeforeDeut)
     }
-    
+
     func testCanGetNumberOfPriorVerses() {
         let expectedNumberOfVersesInGenesisAndExodus = 1533 + 1213
-        
+
         let numberOfVersesBeforeLeviticus = BibleBook.Leviticus.versesPriorTo()
-        
+
         XCTAssertEqual(numberOfVersesBeforeLeviticus, expectedNumberOfVersesInGenesisAndExodus)
     }
-    
+
     func testCanGetNumberOfPriorVersesInABook() {
         let expectNumberOfVersesInFirst9ChaptersOfGenesis = 31  + 25  + 24  + 26  + 32  + 22  + 24  + 22  + 29
-        
+
         let numberOfVersesPriorToChapter10OfGenesis = BibleBook.Genesis.numberOfVerses(beforeChapter: 10)
-        
+
         XCTAssertEqual(numberOfVersesPriorToChapter10OfGenesis, expectNumberOfVersesInFirst9ChaptersOfGenesis)
     }
-    
+
     func testCanGetAbsoluteVerseNumberForGenesis1v1() {
         let expectedAbsoluteVerseNumberForStartOfBible = 1
-        
+
         let startOfBible = BibleReference(withBook: .Genesis, chapter:1, andVerse: 1)!
-        
+
         let absoluteVerseNumber = startOfBible.absoluteVerseNumber()
-        
+
         XCTAssertEqual(absoluteVerseNumber, expectedAbsoluteVerseNumberForStartOfBible)
     }
-    
+
     func testCanGiveMeTheStartOfTheBible() {
         let startOfBible = BibleReference.startOfBible()
-        
+
         XCTAssertEqual(startOfBible.book, BibleBook.Genesis)
         XCTAssertEqual(startOfBible.chapterNumber, 1)
         XCTAssertEqual(startOfBible.verseNumber, 1)
     }
-    
+
     func testCanGiveMeTheEndOfTheBible() {
         let endOfBible = BibleReference.endOfBible()
-        
+
         XCTAssertEqual(endOfBible.book, BibleBook.Revelation)
         XCTAssertEqual(endOfBible.chapterNumber, 22)
         XCTAssertEqual(endOfBible.verseNumber, 21)
     }
-    
+
     func testCanGetNextBookOfTheBible() {
         let genesis = BibleBook.Genesis
         let expectedNextBook = BibleBook.Exodus
-        
+
         XCTAssertEqual(genesis.nextBook(), expectedNextBook)
     }
-    
+
     func testCanGetNextBookOfTheBibleWhenThereIsNoNextBook() {
         let revelation = BibleBook.Revelation
-        
+
         XCTAssertNil(revelation.nextBook())
     }
-    
+
     func testCanGetPreviousBookOfTheBible() {
         let revelation = BibleBook.Revelation
         let expectedPreviousBook = BibleBook.Jude
-        
+
         XCTAssertEqual(revelation.previousBook(), expectedPreviousBook)
     }
-    
+
     func testCanGetPreviousBookOfTheBibleWhenThereIsNoPreviousBook() {
         let genesis = BibleBook.Genesis
-        
+
         XCTAssertNil(genesis.previousBook())
     }
-    
+
     func testCanGetGenesis1v1FromAbsoluteVerseNumber() {
-        let absoluteVerseNumber:AbsoluteVerseNumber = 1
-        
+        let absoluteVerseNumber: AbsoluteVerseNumber = 1
+
         let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
-        
+
         XCTAssertEqual(reference?.book, BibleBook.Genesis)
-        XCTAssertEqual(reference?.chapterNumber,1)
+        XCTAssertEqual(reference?.chapterNumber, 1)
         XCTAssertEqual(reference?.verseNumber, 1)
     }
-    
+
     func testCanGetGenesis2v1FromAbsoluteVerseNumber() {
-        let absoluteVerseNumber:AbsoluteVerseNumber = 32
-        
+        let absoluteVerseNumber: AbsoluteVerseNumber = 32
+
         let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
-        
+
         XCTAssertEqual(reference?.book, BibleBook.Genesis)
-        XCTAssertEqual(reference?.chapterNumber,2)
+        XCTAssertEqual(reference?.chapterNumber, 2)
         XCTAssertEqual(reference?.verseNumber, 1)
     }
-    
+
     func testCanGetGenesis50v26FromAbsoluteVerseNumber() {
-        let absoluteVerseNumber:AbsoluteVerseNumber = 1533
-        
+        let absoluteVerseNumber: AbsoluteVerseNumber = 1533
+
         let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
-        
+
         XCTAssertEqual(reference?.book, BibleBook.Genesis)
-        XCTAssertEqual(reference?.chapterNumber,50)
+        XCTAssertEqual(reference?.chapterNumber, 50)
         XCTAssertEqual(reference?.verseNumber, 26)
     }
-    
+
     func testThatEstherIsSeventeenthBookOfBible() {
         XCTAssertEqual(BibleBook.allBooks()[16], BibleBook.Esther)
         XCTAssertEqual(BibleBook.allBooks()[21], BibleBook.Song_of_Solomon)
         XCTAssertEqual(BibleBook.allBooks()[26], BibleBook.Daniel)
         XCTAssertEqual(BibleBook.allBooks()[38], BibleBook.Malachi)
     }
-    
+
     func testThatEstherHasTenChapters() {
         XCTAssertEqual(BibleBook.Esther.numberOfChapters(), 10)
     }
-    
+
     func testThatDanielHasTwelveChapters() {
         XCTAssertEqual(BibleBook.Daniel.numberOfChapters(), 12)
     }
-    
+
     func testThatTheRightNumberOfChaptersInTheBible() {
-        let numberOfChaptersInTheBible = BibleBook.allBooks().map {book in book.numberOfChapters()}.reduce(0,+)
-        
+        let numberOfChaptersInTheBible = BibleBook.allBooks().map { book in book.numberOfChapters() }.reduce(0, +)
+
         let expectedNumberOfChaptersInTheBible = 1189
-        
+
         XCTAssertEqual(numberOfChaptersInTheBible, expectedNumberOfChaptersInTheBible)
     }
-    
+
     func testThatTheRightNumberOfVersesInTheOldTestament() {
-        let numberOfVersesInTheOldTestament = BibleBook.oldTestamentBooks().map { book in book.numberOfVerses()}.reduce(0,+)
+        let numberOfVersesInTheOldTestament = BibleBook.oldTestamentBooks().map { book in book.numberOfVerses() }.reduce(0, +)
         let expectedNumberOfVersesInTheOldTestament = 23145
-        
+
         XCTAssertEqual(numberOfVersesInTheOldTestament, expectedNumberOfVersesInTheOldTestament)
     }
-    
+
     func testThatTheRightNumberOfVersesInTheBible() {
-        let numberOfVersesInTheOldTestament = BibleBook.allBooks().map { book in book.numberOfVerses()}.reduce(0,+)
+        let numberOfVersesInTheOldTestament = BibleBook.allBooks().map { book in book.numberOfVerses() }.reduce(0, +)
         let expectedNumberOfVersesInTheOldTestament = 31088
-        
+
         XCTAssertEqual(numberOfVersesInTheOldTestament, expectedNumberOfVersesInTheOldTestament)
     }
-    
+
     func testRightNumberOfChaptersInEachBook() {
         XCTAssertEqual(BibleBook.Genesis.numberOfChapters(), 50)
         XCTAssertEqual(BibleBook.Exodus.numberOfChapters(), 40)
@@ -206,12 +205,12 @@ class BibleMetaDataTests: XCTestCase {
         XCTAssertEqual(BibleBook.Haggai.numberOfChapters(), 2)
         XCTAssertEqual(BibleBook.Zechariah.numberOfChapters(), 14)
         XCTAssertEqual(BibleBook.Malachi.numberOfChapters(), 4)
-        
+
         XCTAssertEqual(BibleBook.Matthew.numberOfChapters(), 28)
         XCTAssertEqual(BibleBook.Mark.numberOfChapters(), 16)
         XCTAssertEqual(BibleBook.Luke.numberOfChapters(), 24)
         XCTAssertEqual(BibleBook.John.numberOfChapters(), 21)
-        
+
         XCTAssertEqual(BibleBook.Acts.numberOfChapters(), 28)
         XCTAssertEqual(BibleBook.Romans.numberOfChapters(), 16)
         XCTAssertEqual(BibleBook.Mark.numberOfChapters(), 16)
@@ -237,7 +236,7 @@ class BibleMetaDataTests: XCTestCase {
         XCTAssertEqual(BibleBook.Jude.numberOfChapters(), 1)
         XCTAssertEqual(BibleBook.Revelation.numberOfChapters(), 22)
     }
-    
+
     func testRightNumberOfVersesInEachBook() {
         XCTAssertEqual(BibleBook.Genesis.numberOfVerses(), 1533)
         XCTAssertEqual(BibleBook.Exodus.numberOfVerses(), 1213)
@@ -279,63 +278,58 @@ class BibleMetaDataTests: XCTestCase {
         XCTAssertEqual(BibleBook.Zechariah.numberOfVerses(), 211)
         XCTAssertEqual(BibleBook.Malachi.numberOfVerses(), 55)
     }
-    
-    
+
     func testCanGetMalachi4v24FromAbsoluteVerseNumber() {
-        let absoluteVerseNumber:AbsoluteVerseNumber = 23145
-        
+        let absoluteVerseNumber: AbsoluteVerseNumber = 23145
+
         let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
-        
+
         XCTAssertEqual(reference?.book, BibleBook.Malachi)
-        XCTAssertEqual(reference?.chapterNumber,4)
+        XCTAssertEqual(reference?.chapterNumber, 4)
         XCTAssertEqual(reference?.verseNumber, 6)
     }
-    
+
     func testCanGetRevelation22v21FromAbsoluteVerseNumber() {
-        let absoluteVerseNumber:AbsoluteVerseNumber = 31088
-        
+        let absoluteVerseNumber: AbsoluteVerseNumber = 31088
+
         let reference = BibleBook.reference(withAbsoluteVerseNumber: absoluteVerseNumber)
-        
+
         XCTAssertEqual(reference?.book, BibleBook.Revelation)
-        XCTAssertEqual(reference?.chapterNumber,22)
+        XCTAssertEqual(reference?.chapterNumber, 22)
         XCTAssertEqual(reference?.verseNumber, 21)
     }
-    
+
     func testCanGetNameForBook() {
         let expectedBookName = "Genesis"
-        
+
         XCTAssertEqual(BibleBook.Genesis.name(), expectedBookName)
     }
-    
-    
-    
+
     func testCanGetBookWithName() {
         XCTAssertEqual(BibleBook.findBook(withName: "Genesis"), BibleBook.Genesis)
     }
-    
+
     func testCanGetNilWhenNameIsGarbage() {
         XCTAssertNil(BibleBook.findBook(withName: "Thomas"))
     }
-    
+
     func testCanGetBooksWithShortenedName() {
         XCTAssertEqual(BibleBook.getBook(whereNameStartsWith: "Ge"), BibleBook.Genesis)
     }
-    
+
     func testGetsNilWhenUsingAmbiguousPrefix() {
         XCTAssertNil(BibleBook.getBook(whereNameStartsWith: "G"))
     }
-    
+
     func testCanGetNumberOfVersesInPassage() {
         let expectedPassageLengthInVerses = 5
-        let start = BibleReference(withBook:.Genesis,chapter:1, andVerse:1)!
-        let end = BibleReference(withBook:.Genesis,chapter:1, andVerse:5)!
+        let start = BibleReference(withBook:.Genesis, chapter:1, andVerse:1)!
+        let end = BibleReference(withBook:.Genesis, chapter:1, andVerse:5)!
         let passage = BiblePassage(start: start, end: end)
-        
+
         let passageLengthInVerses = passage.numberOfVerses()
-        
+
         XCTAssertEqual(passageLengthInVerses, expectedPassageLengthInVerses)
     }
-    
-       
-    
+
 }

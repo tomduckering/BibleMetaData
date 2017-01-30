@@ -89,7 +89,7 @@ extension BibleBook {
             return "Zechariah"
         case .Malachi:
             return "Malachi"
-            
+
         case .Matthew:
             return "Matthew"
         case .Mark:
