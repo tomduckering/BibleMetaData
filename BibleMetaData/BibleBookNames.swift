@@ -146,11 +146,11 @@ extension BibleBook {
             return "Revelation"
         }
     }
-    
+
     func alternativeNames() -> [String] {
         switch self {
         case .Song_of_Solomon:
-            return [self.name(),"Song of Songs"]
+            return [self.name(), "Song of Songs"]
         default:
             return [self.name()]
         }

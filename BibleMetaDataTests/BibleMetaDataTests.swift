@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import BibleMetaData
+@testable import BibleMetrics
 
 class BibleMetaDataTests: XCTestCase {
     

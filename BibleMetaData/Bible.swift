@@ -89,8 +89,6 @@ enum BibleBook: Int {
     case Revelation
     
     static func allBooks() -> [BibleBook] {
-        return (0..<66).map { rawValue in
-            return BibleBook(rawValue: rawValue)!
-        }
+        return (0..<66).map { return BibleBook(rawValue: $0)! }
     }
 }

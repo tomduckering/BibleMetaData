@@ -30,48 +30,7 @@ struct BibleReference {
         }
     }
     
-    init?(fromString string: String) {
         
-        let regexPattern = "(\\d?[a-zA-Z ]*[a-zA-Z]) ?(?:(\\d{1,3})(?::(\\d{1,3}))?)?"
-        
-        let captures = string.capturedGroups(withRegex: regexPattern)
-        
-        switch captures.count {
-        case 0:
-            return nil
-        case 1:
-            guard let book = BibleBook.findBook(withName: captures[0])
-                else {
-                    return nil
-            }
-            self.init(withBook: book,chapter: 1,andVerse: 1)
-        case 2:
-            guard let book = BibleBook.findBook(withName: captures[0])
-                else {
-                    return nil
-            }
-            guard let chapterNumber = Int(captures[1]) else {
-                return nil
-            }
-            self.init(withBook: book,chapter: chapterNumber, andVerse: 1)
-        case 3:
-            guard let book = BibleBook.findBook(withName: captures[0])
-                else {
-                    return nil
-            }
-            guard let chapterNumber = Int(captures[1]) else {
-                return nil
-            }
-            
-            guard let verseNumber = Int(captures[2]) else {
-                return nil
-            }
-            self.init(withBook: book,chapter: chapterNumber,andVerse: verseNumber)
-        default:
-            return nil
-        }
-    }
-    
     static func startOfBible() -> BibleReference {
         let firstBook = BibleBook(rawValue: 0)!
         return firstBook.startingReference()

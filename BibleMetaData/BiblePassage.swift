@@ -11,10 +11,8 @@ import Foundation
 struct BiblePassage {
     let start: BibleReference
     let end: BibleReference
-    
+
     func numberOfVerses() -> Int {
         return start.distanceTo(other: end) + 1
     }
 }
-
-

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import BibleMetaData
+@testable import BibleMetrics
 
 class BibleReferenceTests: XCTestCase {
     
@@ -75,20 +75,19 @@ class BibleReferenceTests: XCTestCase {
         XCTAssertEqual(parsedReference.verseNumber,12)
     }
     
-    func testCanCreateBibleReferenceFromStringMissingVerse() {
-        let inputString = "Genesis 1"
+    func testDoesNotCreateBibleReferenceFromStringMissingVerse() {
         
-        guard let parsedReference = BibleReference(fromString: inputString)
-            else {
-                XCTFail("unable to parse reference")
-                return
-        }
-        
-        XCTAssertEqual(parsedReference.book,BibleBook.Genesis)
-        XCTAssertEqual(parsedReference.chapterNumber,1)
-        XCTAssertEqual(parsedReference.verseNumber,1)
+        let parsedReference = BibleReference(fromString: "Genesis 1")
+
+        XCTAssertNil(parsedReference)
     }
 
+    func testDoesNotCreateBibleReferenceFromStringMissingChapterAndVerse() {
+
+        let parsedReference = BibleReference(fromString: "Genesis")
+
+        XCTAssertNil(parsedReference)
+    }
 
     func testCannotCreateBibleReferenceFromInvalidString() {
         let inputString = "garbage"
