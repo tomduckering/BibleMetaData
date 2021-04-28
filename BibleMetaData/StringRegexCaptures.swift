@@ -19,7 +19,7 @@ extension String {
             return results
         }
 
-        let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.characters.count))
+        let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.count))
 
         guard let match = matches.first else { return results }
 
@@ -27,7 +27,7 @@ extension String {
         guard lastRangeIndex >= 1 else { return results }
 
         for i in 1...lastRangeIndex {
-            let capturedGroupIndex = match.rangeAt(i)
+            let capturedGroupIndex = match.range(at: i)
             if capturedGroupIndex.length > 0 {
                 let matchedString = (self as NSString).substring(with: capturedGroupIndex)
                 results.append(matchedString)
