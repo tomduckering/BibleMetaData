@@ -64,7 +64,7 @@ extension BibleBook {
             return range
         }
 
-        guard let chapterIndex = verseRanges.index(where: { verseRange in verseRange ~= internalVerseNumber })
+        guard let chapterIndex = verseRanges.firstIndex(where: { verseRange in verseRange ~= internalVerseNumber })
             else {
                 return nil
         }
